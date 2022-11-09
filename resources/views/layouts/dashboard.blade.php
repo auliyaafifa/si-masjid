@@ -89,6 +89,7 @@
                                 <i class="bi bi-hdd"></i>
                                 <span>Master Data</span>
                             </a>
+                            
                             <ul class="submenu ">
                                 <li class="submenu-item {{ Request::path() ==  'departemen' ? 'active' : ''  }}">
                                     <a href="/departemen">Departemen</a>
