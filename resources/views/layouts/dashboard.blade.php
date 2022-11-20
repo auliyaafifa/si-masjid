@@ -91,14 +91,17 @@
                             </a>
                             
                             <ul class="submenu ">
+                                <li class="submenu-item {{ Request::path() ==  'users' ? 'active' : ''  }}">
+                                    <a href="/users">Akun</a>
+                                </li>
                                 <li class="submenu-item {{ Request::path() ==  'departemen' ? 'active' : ''  }}">
                                     <a href="/departemen">Departemen</a>
                                 </li>
                                 <li class="submenu-item {{ Request::path() ==  'kategori_pemasukan' ? 'active' : ''  }}">
-                                    <a href="/kategori_pemasukan">Kategori Pemasukan</a>
+                                    <a href="/kategoripemasukan">Kategori Pemasukan</a>
                                 </li>
                                 <li class="submenu-item {{ Request::path() ==  'kategori_pengeluaran' ? 'active' : ''  }}">
-                                    <a href="/kategori_pengeluaran">Kategori Pengeluaran</a>
+                                    <a href="/kategoripengeluaran">Kategori Pengeluaran</a>
                                 </li>
                             </ul>
                         </li>

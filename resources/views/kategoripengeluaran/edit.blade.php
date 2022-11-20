@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.dashboard')
 
 @section('content')
 <h1>Ubah Kategori Pengeluaran</h1>

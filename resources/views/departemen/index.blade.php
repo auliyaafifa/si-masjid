@@ -1,7 +1,10 @@
-@extends('layouts.master')
+@extends('layouts.dashboard')
 
 @section('content')
-    <div class="container"><br>
+<div class="page-heading">
+    <h3>Departemen</h3>
+</div>
+<div class="page-content">
         <a class="btn btn-success mb-3" href="/departemen/create">Tambah</a>
             <div class="card">
             <div class="card-body">
@@ -35,6 +38,7 @@
                 @endforeach
             </table>
         </div>
+    </div>
 
 @endsection
 
