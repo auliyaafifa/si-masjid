@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\JamaahLaporanController;
+use App\Http\Controllers\JamaahPemasukanController;
+use App\Http\Controllers\JamaahPengeluaranController;
+use App\Http\Controllers\LandingPageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\KategoriPemasukanController;
@@ -21,9 +25,11 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LandingPageController::class, 'index']);
+
+Route::get('/jamaah/laporan', [JamaahLaporanController::class, 'index']);
+Route::get('/jamaah/pemasukan', [JamaahPemasukanController::class, 'index']);
+Route::get('/jamaah/pengeluaran', [JamaahPengeluaranController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
     Route::middleware('role:Ketua,Bendahara,Pengurus')->group(function () {
