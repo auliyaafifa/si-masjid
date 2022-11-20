@@ -84,6 +84,7 @@
                                 <span>Laporan</span>
                             </a>
                         </li>
+                        @if (in_array(auth()->user()->role, ['Ketua', 'Bendahara']))
                         <li class="sidebar-item has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-hdd"></i>
@@ -91,9 +92,11 @@
                             </a>
                             
                             <ul class="submenu ">
+                                @if (in_array(auth()->user()->role, ['Ketua']))
                                 <li class="submenu-item {{ Request::path() ==  'users' ? 'active' : ''  }}">
                                     <a href="/users">Akun</a>
                                 </li>
+                                @endif
                                 <li class="submenu-item {{ Request::path() ==  'departemen' ? 'active' : ''  }}">
                                     <a href="/departemen">Departemen</a>
                                 </li>
@@ -105,6 +108,7 @@
                                 </li>
                             </ul>
                         </li>
+                        @endif
                         <li class="sidebar-item">
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"

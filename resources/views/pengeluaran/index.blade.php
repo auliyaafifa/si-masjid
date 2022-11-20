@@ -5,9 +5,11 @@
     <h3>Pengeluaran</h3>
 </div>
 <div class="page-content">
-    <div class="card">
+    @if (in_array(auth()->user()->role, ['Ketua', 'Bendahara']))
+    <a class="btn btn-success mb-3" href="/pengeluaran/create">Tambah</a>
+    @endif
+     <div class="card">
         <div class="card-body">
-            <a class="btn btn-success mb-3" href="/pengeluaran/create">Tambah</a>
             <form class="row">
                 <div class="col-3">
                     <div class="mb-3 row">
@@ -88,6 +90,7 @@
                                 <td>{{$k->departemen->nama_departemen}}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
+                                        @if (in_array(auth()->user()->role, ['Ketua', 'Bendahara']))
                                         <a class="btn btn-warning btn-sm" href="/pengeluaran/{{$k->id}}/edit">Edit</a>
                                         <a class="btn btn-warning btn-sm" href="/pengeluaran/{{$k->id}}/show">Detail</a>
                                         <form action="/pengeluaran/{{$k->id}}" method="POST">
@@ -95,6 +98,9 @@
                                             @method('delete')
                                             <input class="btn btn-danger btn-sm" type="submit" value="Hapus">
                                         </form>
+                                        @else
+                                        -
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

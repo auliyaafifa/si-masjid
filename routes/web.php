@@ -79,7 +79,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
