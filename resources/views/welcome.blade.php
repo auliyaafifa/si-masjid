@@ -24,7 +24,7 @@
       <div class="card">
         <div class="card-body text-center">
           <h5>Total Pemasukan</h5>
-          <h3>{{ $pemasukanTotal }}</h3>
+          <h3>{{ format_currency($pemasukanTotal) }}</h3>
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@
       <div class="card">
         <div class="card-body text-center">
           <h5>Total Pengeluaran</h5>
-          <h3>{{ $pengeluaranTotal }}</h3>
+          <h3>{{ format_currency($pengeluaranTotal) }}</h3>
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@
       <div class="card">
         <div class="card-body text-center">
           <h5>Total Saldo</h5>
-          <h3>{{ $saldoTotal }}</h3>
+          <h3>{{ format_currency($saldoTotal) }}</h3>
         </div>
       </div>
     </div>
