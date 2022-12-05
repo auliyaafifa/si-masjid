@@ -1,23 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Exports;
 
-use App\Laporan;
-
-use App\Exports\LaporanExport;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Models\Pengeluaran;
-use Illuminate\Http\Request;
-use App\Models\Pemasukan;
-use App\Models\KategoriPemasukan;
 use App\Models\Departemen;
+use App\Models\Pemasukan;
+use App\Models\Pengeluaran;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Support\Facades\DB;
 
-class LaporanController extends Controller
-
+class LaporanExport implements FromView
 {
-    public function index(Request $request)
-    {
+	/**
+	 * @return \Illuminate\Contracts\View\View
+	 */
+    public function view(): \Illuminate\Contracts\View\View{
+        $request = request()->all();
         $departemen = $request['departemen'];
         $tahun = $request['tahun'] ?? now()->year;
         $pemasukantahunsebelumnya = Pemasukan::query()
@@ -83,11 +81,6 @@ class LaporanController extends Controller
         $listtahun = array_merge($listtahunpemasukan, $listtahunpengeluaran);
         $listtahun = array_unique($listtahun);
 
-        return view('jamaah.laporan',compact(['laporan', 'listbulan', 'totalpemasukan', 'totalpengeluaran', 'totalsaldo', 'listtahun', 'listdepartemen', 'saldotahunsebelumnya']));
+        return view('export.laporan',compact(['laporan', 'listbulan', 'totalpemasukan', 'totalpengeluaran', 'totalsaldo', 'listtahun', 'listdepartemen', 'saldotahunsebelumnya']));
     }
-
-    public function export_excel(Request $request)
-	{
-		return Excel::download(new LaporanExport, 'laporan.xlsx');
-	}
 }

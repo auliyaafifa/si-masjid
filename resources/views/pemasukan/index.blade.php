@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </form>
-            <table class="table table-hover">
+            <table class="table table-bordered">
                 <tr>
                     <th>Nomor</th>
                     <th>Tanggal</th>
@@ -82,10 +82,10 @@
                     <td>{{$loop->iteration}}</td>
                     <td>{{$m->tanggal}}</td>
                     <td>{{$m->kategori_pemasukan->nama_k_pemasukan}}</td>
-                    <td>{{$m->jumlah}}</td>
+                    <td>{{format_currency($m->jumlah)}}</td>
                     <td>{{$m->deskripsi}}</td>
                     <td>{{$m->departemen->nama_departemen}}</td>
-                    <td>
+                    <td style="white-space: nowrap">
                         <div class="btn-group" role="group" aria-label="Basic example">
                             @if (in_array(auth()->user()->role, ['Ketua', 'Bendahara']))
                             <a class="btn btn-warning btn-sm" href="/pemasukan/{{$m->id}}/edit">Edit</a>

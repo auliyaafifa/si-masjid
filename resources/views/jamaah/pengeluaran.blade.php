@@ -68,7 +68,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-bordered">
                             <tr>
                                 <th>Nomor</th>
                                 <th>Tanggal</th>
@@ -76,7 +76,6 @@
                                 <th>Jumlah</th>
                                 <th>Keterangan</th>
                                 <th>Departemen</th>
-                                <th>Aksi</th>
                             </tr>
                             @foreach($pengeluaran as $k)
                             <tr>

@@ -35,8 +35,8 @@
                     </div>
                 </div>
             </form>
-            Saldo sebelumnya: {{$saldotahunsebelumnya}}
-            <table class="table table-hover">
+            Saldo sebelumnya: {{ format_currency($saldotahunsebelumnya) }}
+            <table class="table table-bordered">
                 <tr>
                     <th>Nomor</th>
                     <th>Bulan</th>
@@ -55,9 +55,9 @@
                 @endforeach
                 <tr class="fw-bold">
                     <td colspan="2">Total</td>
-                    <td class="text-end">{{$totalpemasukan}}</td>
-                    <td class="text-end">{{$totalpengeluaran}}</td>
-                    <td class="text-end">{{$totalsaldo}}</td>
+                    <td class="text-end">{{ format_currency($totalpemasukan) }}</td>
+                    <td class="text-end">{{ format_currency($totalpengeluaran) }}</td>
+                    <td class="text-end">{{ format_currency($totalsaldo) }}</td>
                 </tr>
             </table>
         </div>

@@ -70,7 +70,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-bordered">
                             <tr>
                                 <th>Nomor</th>
                                 <th>Tanggal</th>
@@ -88,20 +88,20 @@
                                 <td>{{$k->jumlah}}</td>
                                 <td>{{$k->deskripsi}}</td>
                                 <td>{{$k->departemen->nama_departemen}}</td>
-                                <td>
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                        @if (in_array(auth()->user()->role, ['Ketua', 'Bendahara']))
-                                        <a class="btn btn-warning btn-sm" href="/pengeluaran/{{$k->id}}/edit">Edit</a>
-                                        <a class="btn btn-warning btn-sm" href="/pengeluaran/{{$k->id}}/show">Detail</a>
-                                        <form action="/pengeluaran/{{$k->id}}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <input class="btn btn-danger btn-sm" type="submit" value="Hapus">
-                                        </form>
-                                        @else
-                                        -
-                                        @endif
-                                    </div>
+                                <td style="white-space: nowrap">
+                                    @if (in_array(auth()->user()->role, ['Ketua', 'Bendahara']))
+                                    <a class="btn btn-warning btn-sm" href="/pengeluaran/{{$k->id}}/edit">Edit</a>
+                                    @if ($k->gambar)
+                                        <a class="btn btn-warning btn-sm" href="{{ asset('uploaded_image/' . $k->gambar) }}">Lihat Kuitansi</a>
+                                    @endif
+                                    <form action="/pengeluaran/{{$k->id}}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('delete')
+                                        <input class="btn btn-danger btn-sm" type="submit" value="Hapus">
+                                    </form>
+                                    @else
+                                    -
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

@@ -5,7 +5,7 @@
     <div class="container">
         <div class="card">
         <div class="card-body">
-        <form action="/pengeluaran/store" method="POST">
+        <form action="/pengeluaran/store" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Tanggal</label>

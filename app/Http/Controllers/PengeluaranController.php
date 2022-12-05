@@ -45,8 +45,17 @@ class PengeluaranController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->except(['_token','submit']));
-        Pengeluaran::create($request->except(['_token','submit']));
+        $gambar = time().'.'.$request->gambar->extension();
+
+        $request->gambar->move(public_path('uploaded_image'), $gambar);
+        Pengeluaran::create([
+            'tanggal' => $request->tanggal,
+            'kategori_id' => $request->kategori_id,
+            'jumlah' => $request->jumlah,
+            'deskripsi' => $request->deskripsi,
+            'departemen_id' => $request->departemen_id,
+            'gambar' => $gambar
+        ]);
         return redirect('/pengeluaran');
     }
 

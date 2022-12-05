@@ -11,6 +11,7 @@ use App\Http\Controllers\KategoriPengeluaranController;
 use App\Http\Controllers\PemasukanController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\LaporanBulananController;
 use App\Http\Controllers\UserController;
 
 
@@ -27,7 +28,10 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [LandingPageController::class, 'index']);
 
+Route::get('/jamaah/laporan/bulanan', [LaporanBulananController::class, 'index']);
+Route::get('/jamaah/laporan/bulanan/export_excel', [LaporanBulananController::class, 'export_excel']);
 Route::get('/jamaah/laporan', [JamaahLaporanController::class, 'index']);
+Route::get('/jamaah/laporan/export_excel', [LaporanController::class, 'export_excel']);
 Route::get('/jamaah/pemasukan', [JamaahPemasukanController::class, 'index']);
 Route::get('/jamaah/pengeluaran', [JamaahPengeluaranController::class, 'index']);
 

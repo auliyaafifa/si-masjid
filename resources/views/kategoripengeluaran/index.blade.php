@@ -5,7 +5,7 @@
         <a class="btn btn-success mb-3" href="/kategoripengeluaran/create">Tambah</a>
         <div class="card">
             <div class="card-body">
-            <table class="table table-hover">
+            <table class="table table-bordered">
                 <tr>
                     <th>Nomor</th>
                     <th>Nama Kategori</th>

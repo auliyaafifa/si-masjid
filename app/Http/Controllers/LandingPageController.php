@@ -35,6 +35,39 @@ class LandingPageController extends Controller
         $pemasukanTotal = Pemasukan::sum('jumlah');
         $pengeluaranTotal = Pengeluaran::sum('jumlah');
         $saldoTotal = $pemasukanTotal - $pengeluaranTotal;
-        return view('welcome', compact('year', 'listBulan', 'dataYPemasukan', 'dataYPengeluaran', 'pemasukanTotal', 'pengeluaranTotal', 'saldoTotal'));
+
+        $dataYPemasukanPerDepartemen = Pemasukan::select('departemen_id', DB::raw('sum(jumlah) as jumlah'))
+            ->with('departemen')
+            ->whereYear('tanggal', $year)
+            ->groupBy('departemen_id')
+            ->get();
+        $dataXPemasukanPerDepartemen = $dataYPemasukanPerDepartemen->pluck('departemen')->pluck('nama_departemen');
+        $dataYPemasukanPerDepartemen = $dataYPemasukanPerDepartemen->pluck('jumlah');
+
+        $dataYPengeluaranPerDepartemen = Pengeluaran::select('departemen_id', DB::raw('sum(jumlah) as jumlah'))
+            ->with('departemen')
+            ->whereYear('tanggal', $year)
+            ->groupBy('departemen_id')
+            ->get();
+        $dataXPengeluaranPerDepartemen = $dataYPengeluaranPerDepartemen->pluck('departemen')->pluck('nama_departemen');
+        $dataYPengeluaranPerDepartemen = $dataYPengeluaranPerDepartemen->pluck('jumlah');
+
+        $dataYPemasukanPerKategori = Pemasukan::select('kategori_id', DB::raw('sum(jumlah) as jumlah'))
+            ->with('kategori_pemasukan')
+            ->whereYear('tanggal', $year)
+            ->groupBy('kategori_id')
+            ->get();
+        $dataXPemasukanPerKategori = $dataYPemasukanPerKategori->pluck('kategori_pemasukan')->pluck('nama_k_pemasukan');
+        $dataYPemasukanPerKategori = $dataYPemasukanPerKategori->pluck('jumlah');
+
+        $dataYPengeluaranPerKategori = Pengeluaran::select('kategori_id', DB::raw('sum(jumlah) as jumlah'))
+            ->with('kategori_pengeluaran')
+            ->whereYear('tanggal', $year)
+            ->groupBy('kategori_id')
+            ->get();
+        $dataXPengeluaranPerKategori = $dataYPengeluaranPerKategori->pluck('kategori_pengeluaran')->pluck('nama_k_pengeluaran');
+        $dataYPengeluaranPerKategori = $dataYPengeluaranPerKategori->pluck('jumlah');
+        
+        return view('welcome', compact('year', 'listBulan', 'dataYPemasukan', 'dataYPengeluaran', 'pemasukanTotal', 'pengeluaranTotal', 'saldoTotal', 'dataXPemasukanPerDepartemen', 'dataYPemasukanPerDepartemen', 'dataXPengeluaranPerDepartemen', 'dataYPengeluaranPerDepartemen', 'dataXPemasukanPerKategori', 'dataYPemasukanPerKategori', 'dataXPengeluaranPerKategori', 'dataYPengeluaranPerKategori'));
     }
 }

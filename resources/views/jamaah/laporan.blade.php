@@ -4,7 +4,7 @@
 @include('components.navbar')
 <div class="container">
     <div class="mt-4 page-heading">
-        <h3>Laporan</h3>
+        <h3>Laporan Tahunan</h3>
     </div>
     <div class="card">
         <div class="card-body">
@@ -36,8 +36,9 @@
                     </div>
                 </div>
             </form>
-            Saldo sebelumnya: {{$saldotahunsebelumnya}}
-            <table class="table table-hover">
+            <a href="/jamaah/laporan/export_excel?departemen={{request('departemen')}}&tahun={{request('tahun')}}&bulan={{request('bulan')}}" class="btn btn-success">Export Excel</a><br>
+            Saldo sebelumnya: {{ format_currency($saldotahunsebelumnya)}}
+            <table class="table table-bordered">
                 <tr>
                     <th>Nomor</th>
                     <th>Bulan</th>
@@ -56,9 +57,9 @@
                 @endforeach
                 <tr class="fw-bold">
                     <td colspan="2">Total</td>
-                    <td class="text-end">{{$totalpemasukan}}</td>
-                    <td class="text-end">{{$totalpengeluaran}}</td>
-                    <td class="text-end">{{$totalsaldo}}</td>
+                    <td class="text-end">{{ format_currency($totalpemasukan) }}</td>
+                    <td class="text-end">{{ format_currency($totalpengeluaran) }}</td>
+                    <td class="text-end">{{ format_currency($totalsaldo) }}</td>
                 </tr>
             </table>
         </div>

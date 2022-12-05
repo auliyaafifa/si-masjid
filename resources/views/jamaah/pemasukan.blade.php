@@ -65,7 +65,7 @@
                     </div>
                 </div>
             </form>
-            <table class="table table-hover">
+            <table class="table table-bordered">
                 <tr>
                     <th>Nomor</th>
                     <th>Tanggal</th>
@@ -73,7 +73,6 @@
                     <th>Jumlah</th>
                     <th>Keterangan</th>
                     <th>Departemen</th>
-                    <th>Aksi</th>
                 </tr>
                 @forelse($pemasukan as $m)
                 <tr>

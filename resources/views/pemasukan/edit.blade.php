@@ -21,6 +21,10 @@
                 </select>
             </div>
             <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Nama Donatur</label>
+                <input type="text" name="nama_donatur" class="form-control" value="{{$pemasukan->nama_donatur}}">
+            </div>
+            <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Jumlah</label>
                 <input type="decimal" name="jumlah" class="form-control" value="{{$pemasukan->jumlah}}">
             </div>
