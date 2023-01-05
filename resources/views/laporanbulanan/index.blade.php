@@ -1,16 +1,14 @@
-@extends('layouts.jamaah')
+@extends('layouts.dashboard')
 
 @section('content')
-@include('components.navbar')
-<div class="container">
-    <div class="mt-4 page-heading">
-        <h5>Laporan Bulanan</h5>
-    </div>
-    {{-- <a href="/jamaah/laporan/export_excel?departemen={{request('departemen')}}&tahun={{request('tahun')}}&bulan={{request('bulan')}}"
-        class="btn btn-success mb-3">Export Excel</a> --}}
+<div class="page-heading">
+    <h5>Laporan Bulanan</h5>
     <div class="page-content d-grid gap-2 d-md-flex justify-content-md-end">
-    <a href="/jamaah/laporan/bulanan/export_pdf?departemen={{request('departemen')}}&tahun={{request('tahun')}}&bulan={{request('bulan')}}"
-        class="btn btn-primary btn-sm mb-3" target="_blank">Unduh PDF</a><br></div>
+        <a href="/laporan/export_excel?departemen={{request('departemen')}}&tahun={{request('tahun')}}&bulan={{request('bulan')}}"
+            class="btn btn-success btn-sm mb-3">Unduh Excel</a>
+        <a href="/laporan/bulanan/export_pdf?departemen={{request('departemen')}}&tahun={{request('tahun')}}&bulan={{request('bulan')}}"
+            class="btn btn-primary btn-sm mb-3">Unduh PDF</a><br>
+    </div>
     <div class="card">
         <div class="card-body">
             <h6 class="text-center">Laporan Keuangan Bulanan</h6>
@@ -63,54 +61,59 @@
                     </div>
                 </form>
                 Saldo sebelumnya: {{ format_currency($saldobulansebelumnya)}}
-                <table class="mt-2 table table-bordered">
-                    <tr class="text-center">
-                        <th colspan="5">Pemasukan</th>
-                        <th colspan="5">Pengeluaran</th>
-                    </tr>
-                    <tr>
-                        <th>Tanggal</th>
-                        <th>Departemen</th>
-                        <th>Kategori</th>
-                        <th>Keterangan</th>
-                        <th>Jumlah</th>
-                        <th>Tanggal</th>
-                        <th>Departemen</th>
-                        <th>Kategori</th>
-                        <th>Keterangan</th>
-                        <th>Jumlah</th>
-                    </tr>
-                    @php
-                    $count = max(count($pemasukan), count($pengeluaran));
-                    @endphp
-                    @if ($count === 0)
-                    <tr>
-                        <td colspan="10" class="text-center">Tidak ada data</td>
-                    </tr>
-                    @endif
-                    @for ($i = 0; $i < $count; $i++) <tr>
-                        <td>{{isset($pemasukan[$i]) ? $pemasukan[$i]->tanggal : ''}}</td>
-                        <td>{{isset($pemasukan[$i]) ? $pemasukan[$i]->departemen->nama_departemen : ''}}</td>
-                        <td>{{isset($pemasukan[$i]) ? $pemasukan[$i]->kategori_pemasukan->nama_k_pemasukan : ''}}</td>
-                        <td>{{isset($pemasukan[$i]) ? $pemasukan[$i]->deskripsi : ''}}</td>
-                        <td>{{isset($pemasukan[$i]) ? format_currency($pemasukan[$i]->jumlah) : ''}}</td>
-                        <td>{{isset($pengeluaran[$i]) ? $pengeluaran[$i]->tanggal : ''}}</td>
-                        <td>{{isset($pengeluaran[$i]) ? $pengeluaran[$i]->departemen->nama_departemen : ''}}</td>
-                        <td>{{isset($pengeluaran[$i]) ? $pengeluaran[$i]->kategori_pengeluaran->nama_k_pengeluaran :
-                            ''}}</td>
-                        <td>{{isset($pengeluaran[$i]) ? $pengeluaran[$i]->deskripsi : ''}}</td>
-                        <td>{{isset($pengeluaran[$i]) ? format_currency($pengeluaran[$i]->jumlah) : ''}}</td>
+                <div class="table-responsive">
+                    <table class="mt-2 table table-bordered">
+                        <tr class="text-center">
+                            <th colspan="5">Pemasukan</th>
+                            <th colspan="5">Pengeluaran</th>
                         </tr>
-                        @endfor
                         <tr>
-                            <td colspan="4">Jumlah</td>
-                            <td>{{ format_currency($jumlahpemasukan) }}</td>
-                            <td colspan="4">Jumlah</td>
-                            <td>{{ format_currency($jumlahpengeluaran) }}</td>
+                            <th>Tanggal</th>
+                            <th>Departemen</th>
+                            <th>Kategori</th>
+                            <th>Keterangan</th>
+                            <th>Jumlah</th>
+                            <th>Tanggal</th>
+                            <th>Departemen</th>
+                            <th>Kategori</th>
+                            <th>Keterangan</th>
+                            <th>Jumlah</th>
                         </tr>
-                </table>
+                        @php
+                        $count = max(count($pemasukan), count($pengeluaran));
+                        @endphp
+                        @if ($count === 0)
+                        <tr>
+                            <td colspan="10" class="text-center">Tidak ada data</td>
+                        </tr>
+                        @endif
+                        @for ($i = 0; $i < $count; $i++) <tr>
+                            <td>{{isset($pemasukan[$i]) ? $pemasukan[$i]->tanggal : ''}}</td>
+                            <td>{{isset($pemasukan[$i]) ? $pemasukan[$i]->departemen->nama_departemen : ''}}</td>
+                            <td>{{isset($pemasukan[$i]) ? $pemasukan[$i]->kategori_pemasukan->nama_k_pemasukan : ''}}
+                            </td>
+                            <td>{{isset($pemasukan[$i]) ? $pemasukan[$i]->deskripsi : ''}}</td>
+                            <td>{{isset($pemasukan[$i]) ? format_currency($pemasukan[$i]->jumlah) : ''}}</td>
+                            <td>{{isset($pengeluaran[$i]) ? $pengeluaran[$i]->tanggal : ''}}</td>
+                            <td>{{isset($pengeluaran[$i]) ? $pengeluaran[$i]->departemen->nama_departemen : ''}}</td>
+                            <td>{{isset($pengeluaran[$i]) ? $pengeluaran[$i]->kategori_pengeluaran->nama_k_pengeluaran :
+                                ''}}
+                            </td>
+                            <td>{{isset($pengeluaran[$i]) ? $pengeluaran[$i]->deskripsi : ''}}</td>
+                            <td>{{isset($pengeluaran[$i]) ? format_currency($pengeluaran[$i]->jumlah) : ''}}</td>
+                            </tr>
+                            @endfor
+                            <tr>
+                                <td colspan="4">Jumlah</td>
+                                <td>{{ format_currency($jumlahpemasukan) }}</td>
+                                <td colspan="4">Jumlah</td>
+                                <td>{{ format_currency($jumlahpengeluaran) }}</td>
+                            </tr>
+                    </table>
+                </div>
                 Saldo akhir: {{ format_currency($saldoakhir)}}
             </div>
         </div>
     </div>
-    @endsection
+</div>
+@endsection

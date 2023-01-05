@@ -11,10 +11,11 @@ use App\Models\Pemasukan;
 use App\Models\KategoriPemasukan;
 use App\Models\Departemen;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use PDF;
 
-class LaporanBulananController extends Controller
+class JamaahLaporanBulananController extends Controller
 {
     public function index(Request $request)
     {
@@ -69,7 +70,7 @@ class LaporanBulananController extends Controller
         $listbulan = config('application.months');
         $listtahun = Pengeluaran::selectRaw("YEAR(tanggal) as year")->orderBy('tanggal', 'desc')->groupBy('year')->pluck('year');
 
-        return view('laporanbulanan.index', compact(['pemasukan', 'pengeluaran', 'saldobulansebelumnya', 'listdepartemen', 'listbulan', 'listtahun', 'jumlahpemasukan', 'jumlahpengeluaran', 'saldoakhir']));
+        return view('jamaah.laporanbulanan', compact(['pemasukan', 'pengeluaran', 'saldobulansebelumnya', 'listdepartemen', 'listbulan', 'listtahun', 'jumlahpemasukan', 'jumlahpengeluaran', 'saldoakhir']));
     }
 
     public function export_pdf(Request $request)
@@ -126,7 +127,7 @@ class LaporanBulananController extends Controller
         $listbulan = config('application.months');
         $listtahun = Pengeluaran::selectRaw("YEAR(tanggal) as year")->orderBy('tanggal', 'desc')->groupBy('year')->pluck('year');
 
-        $pdf = PDF::loadview('export.laporan_bulanan_pdf', compact(['tahun', 'pemasukan', 'pengeluaran', 'saldobulansebelumnya', 'listdepartemen', 'listbulan', 'listtahun', 'jumlahpemasukan', 'jumlahpengeluaran', 'saldoakhir']));
+        $pdf = PDF::loadview('export.laporan_bulanan_pdf', compact(['bulan', 'tahun', 'pemasukan', 'pengeluaran', 'saldobulansebelumnya', 'listdepartemen', 'listbulan', 'listtahun', 'jumlahpemasukan', 'jumlahpengeluaran', 'saldoakhir']));
         // $pdf->setPaper('A4', 'landscape');
         return $pdf->stream('laporanbulanan.pdf');
 	}

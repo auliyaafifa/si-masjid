@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masjidku</title>
+    <title class="text-success">Masjid Baitul Amin</title>
 
     <link rel="stylesheet" href="{{asset('assets/css/main/app.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/main/app-dark.css')}}">
@@ -12,6 +12,8 @@
     <link rel="shortcut icon" href="{{asset('assets/images/logo/favicon.png')}}" type="image/png">
 
     <link rel="stylesheet" href="{{asset('assets/css/shared/iconly.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 </head>
 
@@ -22,9 +24,9 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="/">Masjidku</a>
+                            <h4><a href="/">Masjid Baitul Amin</a></h4>
                         </div>
-                        <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
+                        <div class="d-none theme-toggle d-flex gap-2  align-items-center mt-2">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20"
                                 height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
@@ -58,16 +60,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="sidebar-menu">
+                <div class="sidebar-menu position-relative">
                     <ul class="menu">
-                        <li class="sidebar-item {{ Request::path() ==  'home' ? 'active' : ''  }}">
-                            <a href="/home" class='sidebar-link'>
+                        <li class="sidebar-item  {{ Request::path() ==  'home' ? 'active' : ''  }}">
+                            <a href="/home" class='sidebar-link' >
                                 <i class="bi bi-grid"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
                         <li class="sidebar-item {{ Request::path() ==  'pemasukan' ? 'active' : ''  }} ">
-                            <a href="/pemasukan" class='sidebar-link'>
+                            <a href="/pemasukan" class='sidebar-link' >
                                 <i class="bi bi-coin"></i>
                                 <span>Pemasukan</span>
                             </a>
@@ -78,32 +80,44 @@
                                 <span>Pengeluaran</span>
                             </a>
                         </li>
-                        <li class="sidebar-item {{ Request::path() ==  'laporan' ? 'active' : ''  }}">
-                            <a href="/laporan" class='sidebar-link'>
+                        <li class="sidebar-item has-sub">
+                            <a href="#" class='sidebar-link'>
                                 <i class="bi bi-table"></i>
                                 <span>Laporan</span>
                             </a>
+
+                            <ul class="submenu ">
+                                <li class="submenu-item {{ Request::path() ==  'laporan' ? 'active' : ''  }}">
+                                    <a href="/laporan/bulanan">Laporan Bulanan</a>
+                                </li>
+                                <li class="submenu-item {{ Request::path() ==  'laporan' ? 'active' : ''  }}">
+                                    <a href="/laporan">Laporan Tahunan</a>
+                                </li>
+                            </ul>
                         </li>
+
                         @if (in_array(auth()->user()->role, ['Ketua', 'Bendahara']))
                         <li class="sidebar-item has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-hdd"></i>
                                 <span>Master Data</span>
                             </a>
-                            
+
                             <ul class="submenu ">
-                                @if (in_array(auth()->user()->role, ['Ketua']))
+                                {{-- @if (in_array(auth()->user()->role, ['Ketua']))
                                 <li class="submenu-item {{ Request::path() ==  'users' ? 'active' : ''  }}">
                                     <a href="/users">Akun</a>
                                 </li>
-                                @endif
+                                @endif --}}
                                 <li class="submenu-item {{ Request::path() ==  'departemen' ? 'active' : ''  }}">
                                     <a href="/departemen">Departemen</a>
                                 </li>
-                                <li class="submenu-item {{ Request::path() ==  'kategori_pemasukan' ? 'active' : ''  }}">
+                                <li
+                                    class="submenu-item {{ Request::path() ==  'kategori_pemasukan' ? 'active' : ''  }}">
                                     <a href="/kategoripemasukan">Kategori Pemasukan</a>
                                 </li>
-                                <li class="submenu-item {{ Request::path() ==  'kategori_pengeluaran' ? 'active' : ''  }}">
+                                <li
+                                    class="submenu-item {{ Request::path() ==  'kategori_pengeluaran' ? 'active' : ''  }}">
                                     <a href="/kategoripengeluaran">Kategori Pengeluaran</a>
                                 </li>
                             </ul>
@@ -114,7 +128,7 @@
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                 class='sidebar-link'>
                                 <i class="bi bi-power"></i>
-                                <span>Logout</span>
+                                <span>Keluar</span>
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
@@ -125,6 +139,24 @@
             </div>
         </div>
         <div id="main">
+            <nav class="bg-white shadow-sm px-4 py-3 border-bottom d-flex justify-content-end"
+                style="margin-top: -2rem; margin-left: -2rem; margin-right: -2rem;">
+                <div class="text-end">
+                    {{-- <p class="fw-bold mb-0">
+                        {{ Auth::user()->name }}
+                    </p> --}}
+                    <p class="mb-0" style="font-size: 16px;">{{ Auth::user()->role}}</p>
+                    {{-- <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        class='sidebar-link'>
+                        <i class="bi bi-power"></i>
+                        <span>Keluar</span>
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form> --}}
+                </div>
+            </nav>
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
@@ -136,7 +168,10 @@
     </div>
     <script src="{{asset('assets/js/bootstrap.js')}}"></script>
     <script src="{{asset('assets/js/app.js')}}"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js"
+        integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    @stack('script')
 </body>
 
 </html>

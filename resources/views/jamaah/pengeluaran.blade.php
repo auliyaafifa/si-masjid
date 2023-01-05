@@ -2,7 +2,6 @@
 
 @section('content')
 @include('components.navbar')
-<div class="container">
     <div class="mt-4 page-heading">
         <h3>Pengeluaran</h3>
     </div>

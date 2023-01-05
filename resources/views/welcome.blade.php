@@ -2,167 +2,136 @@
 
 @section('content')
 @include('components.navbar')
-<div class="container">
-  <img src="{{ asset('img/banner.jpg') }}" class="img-fluid w-100" alt="...">
-  <div class="container">
-    <div class="card mt-4">
+<div class="container-sm" style="max-width: 960px;"><br>
+  {{-- <img src="{{ asset('img/wlp1.jpg') }}" class="img-fluid w-100 mt-3" alt="..."> --}}
+  {{-- <div class="container"> --}}
+    {{-- <div class="card mt-4">
       <div class="card-body">
-        <h2>Masjid Baitul Amin</h2>
-        <p>
-          Masjid Baitul Amin merupakan salah satu masjid besar di Desa Balonggebang, Kecamatan Gondang, Kabupaten
-          Nganjuk. Masjid ini telah dibangun sejak tahun sebelum kemerdekaan Indonesia yaitu pada tahun 1938.
-        </p>
-        <p class="mb-0">
-          Luas: 449 meter persegi <br>
-          Luas Utama: 8x20 meter <br>
-          Serambi: 9x20 meter
-          Total Jamaah: +- 530 orang
-        </p>
+        <div class="card text-center">
+          <div class="card-header">
+            Dashboard
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">grafik perkembangan keuangan Masjid Baitul Amin</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="row">
+    </div> --}}
+
+    {{-- <div class="row mt-4">
       <div class="col-md-4">
-        <div class="card">
+        <div class="card text-bg-success mb-3" style="max-width: 18rem;">
           <div class="card-body text-center">
-            <h5>Total Pemasukan</h5>
-            <h3>{{ format_currency($pemasukanTotal) }}</h3>
+            <h6> <i class="bi bi-currency-dollar"></i> Total Pemasukan</h6>
+            <h5>{{ format_currency($pemasukanTotal) }}</h5>
           </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5>Total Pengeluaran</h5>
-            <h3>{{ format_currency($pengeluaranTotal) }}</h3>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5>Total Saldo</h5>
-            <h3>{{ format_currency($saldoTotal) }}</h3>
-          </div>
-        </div>
-      </div>
-    </div>
+      </div> --}}
 
-    <div class="card">
-      <div class="card-body">
-        <div id="pemasukan"></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <div id="pengeluaran"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card">
+      <div class="card text-center">
         <div class="card-body">
-          <h5 class="text-center">Pemasukan per Departemen</h5>
-          <div id="pemasukanperdepartemen"></div>
+          <h5 class="text-uppercase">Rekapitulasi Keuangan Masjid Baitul Amin</h5>
+          <p class="card-text">Desa Balonggebang, Kecamatan Gondang, Kabupaten Nganjuk, Provinsi Jawa Timur</p>
         </div>
       </div>
-    </div>
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="text-center">Pengeluaran per Departemen</h5>
-          <div id="pengeluaranperdepartemen"></div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="text-center">Pemasukan per Kategori</h5>
-          <div id="pemasukanperkategori"></div>
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <div class="card border-success mb-3" style="max-width: 18rem; max-hight: 6rem;">
+            <div class="card-header text-center text-success fw-bold">Total Pemasukan</div>
+            <div class="card-body text-center text-success">
+              <h5 a class="text-success">{{ format_currency($pemasukanTotal) }}</h5>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="text-center">Pengeluaran per Kategori</h5>
-          <div id="pengeluaranperkategori"></div>
+          <div class="col-md-4">
+            <div class="card border-success mb-3 mx-9" style="max-width: 18rem;">
+              <div class="card-header text-center text-danger fw-bold">Total Pengeluaran</div>
+              <div class="card-body text-center text-danger">
+                <h5 a class="text-danger">{{ format_currency($pengeluaranTotal) }}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-success mb-3 mx-9" style="max-width: 18rem;">
+              <div class="card-header text-center text-primary fw-bold">Total Saldo</div>
+              <div class="card-body text-center text-primary">
+                <h5 a class="text-primary">{{ format_currency($saldoTotal) }}</h5>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="card text-center">
-    <div class="card-header">
-      Featured
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">Special title treatment</h5>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    </div>
+        <form class="mb-3">
+        <label class="col-sm-2 col-form-label" class="form-label">Pilih Tahun</label>
+        <div class="col-sm-2">
+        <select id="tahun" class="form-select" name="tahun" onchange="this.form.submit()">
+          @foreach ($listTahun as $tahun)
+          <option value="{{ $tahun }}" @selected((request('tahun') ?? now()->year) ==
+            $tahun)>{{ $tahun }}</option>
+          @endforeach
+        </select>
+        </div>
+      </form>
+        </form>
 
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-      <div class="col">
         <div class="card">
-          <img src="{{ asset('img/gambar1.jpeg') }}" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-              content. This content is a little bit longer.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <h6 class="text-center">Perbandingan jumlah pemasukan dalam satu tahun</h6><br>
+            <div id="pemasukan"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h6 class="text-center">Perbandingan jumlah pengeluaran dalam satu tahun</h6><br>
+            <div id="pengeluaran"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h6 class="text-left">Pemasukan per Departemen</h6>
+                <div id="pemasukanperdepartemen"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h6 class="text-left">Pengeluaran per Departemen</h6>
+                <div id="pengeluaranperdepartemen"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h6 class="text-left">Pemasukan per Kategori</h6>
+                <div id="pemasukanperkategori"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h6 class="text-left">Pengeluaran per Kategori</h6>
+                <div id="pengeluaranperkategori"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="card">
-          <img src="{{ asset('img/gambar2.jpeg') }}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-              content. This content is a little bit longer.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="{{ asset('img/gambar3.jpeg') }}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-              content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="{{ asset('img/gambar4.jpeg') }}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-              content. This content is a little bit longer.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <div class="card-footer text-muted">
-      2 days ago
-    </div>
-  </div>
-</div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script>
-  // Pemasukan
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+      // Pemasukan
   var optionsPemasukan = {
           series: [{
           name: 'Pemasukan',
@@ -323,6 +292,9 @@
         
   optionsPemasukanDepartemen = {
     series: dataYPemasukanPerDepartemen,
+    legend: {
+      position: 'right'
+    },
     chart: {
     type: 'pie',
   },
@@ -337,6 +309,9 @@
 
   optionsPengeluaranDepartemen = {
     series: dataYPengeluaranPerDepartemen,
+    legend: {
+      position: 'right'
+    },
     chart: {
     type: 'pie',
   },
@@ -351,6 +326,9 @@
         
   optionsPemasukanKategori = {
     series: dataYPemasukanPerKategori,
+    legend: {
+      position: 'right'
+    },
     chart: {
     type: 'pie',
   },
@@ -365,6 +343,9 @@
 
   optionsPengeluaranKategori = {
     series: dataYPengeluaranPerKategori,
+    legend: {
+      position: 'right'
+    },
     chart: {
     type: 'pie',
   },
@@ -373,5 +354,5 @@
 
   var chartPengeluaranKategori = new ApexCharts(document.querySelector("#pengeluaranperkategori"), optionsPengeluaranKategori);
   chartPengeluaranKategori.render();
-</script>
-@endsection
+    </script>
+    @endsection

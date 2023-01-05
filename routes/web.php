@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JamaahLaporanBulananController;
 use App\Http\Controllers\JamaahLaporanController;
 use App\Http\Controllers\JamaahPemasukanController;
 use App\Http\Controllers\JamaahPengeluaranController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LaporanBulananController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
 
 
 /*
@@ -28,21 +30,27 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [LandingPageController::class, 'index']);
 
-Route::get('/jamaah/laporan/bulanan', [LaporanBulananController::class, 'index']);
-Route::get('/jamaah/laporan/bulanan/export_excel', [LaporanBulananController::class, 'export_excel']);
+Route::get('/jamaah/laporan/bulanan', [JamaahLaporanBulananController::class, 'index']);
+Route::get('/jamaah/laporan/bulanan/export_excel', [JamaahLaporanBulananController::class, 'export_excel']);
+Route::get('/jamaah/laporan/bulanan/export_pdf', [JamaahLaporanBulananController::class, 'export_pdf']);
 Route::get('/jamaah/laporan', [JamaahLaporanController::class, 'index']);
-Route::get('/jamaah/laporan/export_excel', [LaporanController::class, 'export_excel']);
+Route::get('/jamaah/laporan/export_excel', [JamaahLaporanController::class, 'export_excel']);
+Route::get('/jamaah/laporan/export_pdf', [JamaahLaporanController::class, 'export_pdf']);
 Route::get('/jamaah/pemasukan', [JamaahPemasukanController::class, 'index']);
 Route::get('/jamaah/pengeluaran', [JamaahPengeluaranController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
-    Route::middleware('role:Ketua,Bendahara,Pengurus')->group(function () {
+    Route::middleware('role:Ketua,Bendahara')->group(function () {
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
         Route::get('/pemasukan', [PemasukanController::class, 'index']);
         Route::get('/pengeluaran', [PengeluaranController::class, 'index']);
         Route::get('/laporan', [LaporanController::class, 'index']);
-    });
-    Route::middleware('role:Ketua,Bendahara')->group(function () {
+        Route::get('/laporan/export_excel', [LaporanController::class, 'export_excel']);
+        Route::get('/laporan/export_pdf', [LaporanController::class, 'export_pdf']);
+        Route::get('/laporan/bulanan/export_excel', [LaporanBulananController::class, 'export_excel']);
+        Route::get('/laporan/bulanan/export_pdf', [LaporanBulananController::class, 'export_pdf']);
+        Route::get('/laporan/bulanan', [LaporanBulananController::class, 'index']);
+
         Route::get('/departemen', [DepartemenController::class, 'index']);
         Route::get('/departemen/create', [DepartemenController::class, 'create']);
         Route::post('/departemen/store', [DepartemenController::class, 'store']);

@@ -1,30 +1,47 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<h1>Tambah Departemen</h1>
-    <div class="container">
-        <div class="card">
+<div class="page-heading">
+    <h5>Tambah Departemen</h5>
+</div>
+<div class="container">
+    <div class="card">
         <div class="card-body">
-        <form action="/departemen/store" method="POST">
-            @csrf
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Nama Departemen</label>
-                <input type="text" name="nama_departemen" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Kepala Departemen</label>
-                <input type="text" name="nama_kepala_dept" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Keterangan</label>
-            </div>
-            <textarea class="form-control" name="deskripsi" rows="10"></textarea><br>
-            <select class="form-select" name="status">
-                <option value=""> Pilih Status</option>
-                <option value="Aktif"> Aktif </option>
-                <option value="Tidak Aktif"> Tidak Aktif </option>
-            </select><br>
-            <input type="submit" class="btn btn-primary" name="submit" value="Simpan">
-        </form>
+            <form action="/departemen/store" method="POST">
+                @csrf
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Nama</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="nama_departemen" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Penanggungjawab</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="nama_kepala_dept" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Keterangan</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="deskripsi" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Pilih Status</label>
+                    <div class="col-sm-4">
+                        <select class="form-select" name="status">
+                            <option value=""> Pilih Status</option>
+                            <option value="Aktif"> Aktif </option>
+                            <option value="Tidak Aktif"> Tidak Aktif </option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <input type="submit" class="btn btn-primary" name="submit" value="Simpan"> <a
+                    href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
+            </form>
+        </div>
     </div>
+</div>
 @endsection

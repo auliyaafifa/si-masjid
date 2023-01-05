@@ -13,8 +13,13 @@ class PengeluaranController extends Controller
     {
         $departemen = $request['departemen'];
         $kategori = $request['kategori'];
-        $bulan = $request['bulan'];
-        $tahun = $request['tahun'];
+        $tanggal = explode(' to ', $request['tanggal']);
+        $mulai = $tanggal[0] ?? null;
+        $sampai = $tanggal[1] ?? null;
+        $perPage = $request['per_page'] ?? 10;
+        if ($perPage == 'all') {
+            $perPage = Pengeluaran::count();
+        }
         $pengeluaran = Pengeluaran::query()
             ->when($departemen, function ($query, $departemen) {
                 $query->where('departemen_id', $departemen);
@@ -22,14 +27,14 @@ class PengeluaranController extends Controller
             ->when($kategori, function ($query, $kategori) {
                 $query->where('kategori_id', $kategori);
             })
-            ->when($bulan, function ($query, $bulan) {
-                $query->whereMonth('tanggal', $bulan);
+            ->when($mulai, function ($query, $mulai) {
+                $query->whereDate('tanggal', '>=', $mulai);
             })
-            ->when($tahun, function ($query, $tahun) {
-                $query->whereYear('tanggal', $tahun);
+            ->when($sampai, function ($query, $sampai) {
+                $query->whereDate('tanggal', '<=', $sampai);
             })
             ->orderBy('tanggal', 'desc')
-            ->paginate(10);
+            ->paginate($perPage);
         $listdepartemen = Departemen::where('status', 'Aktif')->get();
         $listkategori = KategoriPengeluaran::where('status', 'Aktif')->get();
         $listbulan = config('application.months');
@@ -45,9 +50,23 @@ class PengeluaranController extends Controller
 
     public function store(Request $request)
     {
-        $gambar = time().'.'.$request->gambar->extension();
+        $validated = $request->validate([
+            'tanggal' => 'required|string',
+            'departemen_id' => 'required|integer|exists:departemen,id',
+            'kategori_id' => 'required|integer|exists:kategori_pengeluaran,id',
+            'nama_donatur' => 'nullable|string',
+            'jumlah' => 'required|numeric',
+            'deskripsi' => 'nullable|string',
+            'gambar' => 'nullable|file'
+        ]);
 
-        $request->gambar->move(public_path('uploaded_image'), $gambar);
+        $gambar = null;
+        if ($request->hasFile('gambar')) {
+            $gambar = time().'.'.$request->gambar->extension();
+    
+            $request->gambar->move(public_path('uploaded_image'), $gambar);
+        }
+
         Pengeluaran::create([
             'tanggal' => $request->tanggal,
             'kategori_id' => $request->kategori_id,
@@ -75,7 +94,18 @@ class PengeluaranController extends Controller
     public function update($id, Request $request)
     {
         $pengeluaran = Pengeluaran::find($id);
-        $pengeluaran->update($request->except(['_token','submit']));
+        if ($request->hasFile('gambar')) {
+            $gambar = time().'.'.$request->gambar->extension();
+    
+            $request->gambar->move(public_path('uploaded_image'), $gambar);
+            $pengeluaran->gambar = $gambar;
+        }
+        $pengeluaran->tanggal = $request->tanggal;
+        $pengeluaran->kategori_id = $request->kategori_id;
+        $pengeluaran->jumlah = $request->jumlah;
+        $pengeluaran->deskripsi = $request->deskripsi;
+        $pengeluaran->departemen_id = $request->departemen_id;
+        $pengeluaran->save();
         return redirect('/pengeluaran');
     }
 

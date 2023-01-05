@@ -14,8 +14,13 @@ class PemasukanController extends Controller
     {
         $departemen = $request['departemen'];
         $kategori = $request['kategori'];
-        $bulan = $request['bulan'];
-        $tahun = $request['tahun'];
+        $tanggal = explode(' to ', $request['tanggal']);
+        $mulai = $tanggal[0] ?? null;
+        $sampai = $tanggal[1] ?? null;
+        $perPage = $request['per_page'] ?? 10;
+        if ($perPage == 'all') {
+            $perPage = Pemasukan::count();
+        }
         $pemasukan = Pemasukan::query()
             ->when($departemen, function ($query, $departemen) {
                 $query->where('departemen_id', $departemen);
@@ -23,14 +28,14 @@ class PemasukanController extends Controller
             ->when($kategori, function ($query, $kategori) {
                 $query->where('kategori_id', $kategori);
             })
-            ->when($bulan, function ($query, $bulan) {
-                $query->whereMonth('tanggal', $bulan);
+            ->when($mulai, function ($query, $mulai) {
+                $query->whereDate('tanggal', '>=', $mulai);
             })
-            ->when($tahun, function ($query, $tahun) {
-                $query->whereYear('tanggal', $tahun);
+            ->when($sampai, function ($query, $sampai) {
+                $query->whereDate('tanggal', '<=', $sampai);
             })
             ->orderBy('tanggal', 'desc')
-            ->paginate(10);
+            ->paginate($perPage);
         $listdepartemen = Departemen::where('status', 'Aktif')->get();
         $listkategori = KategoriPemasukan::where('status', 'Aktif')->get();
         $listbulan = config('application.months');
@@ -47,8 +52,15 @@ class PemasukanController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->except(['_token','submit']));
-        Pemasukan::create($request->except(['_token','submit']));
+        $validated = $request->validate([
+            'tanggal' => 'required|string',
+            'departemen_id' => 'required|integer|exists:departemen,id',
+            'kategori_id' => 'required|integer|exists:kategori_pemasukan,id',
+            'nama_donatur' => 'nullable|string',
+            'jumlah' => 'required|numeric',
+            'deskripsi' => 'nullable|string'
+        ]);
+        Pemasukan::create($validated);
         return redirect('/pemasukan');
     }
 

@@ -10,7 +10,11 @@ use Illuminate\Support\Facades\DB;
 class LandingPageController extends Controller
 {
     public function index(Request $request) {
-        $year = now()->year;
+        $year = $request['tahun'] ?? now()->year;
+        $listTahun = [];
+        for ($i = 0; $i <= 5; $i++) {
+            $listTahun[] = now()->year - $i;
+        }
         $listBulan = config('application.months');
         $listPemasukan = Pemasukan::select(DB::raw('sum(jumlah) as jumlah'), DB::raw('month(tanggal) as bulan'))
             ->whereYear('tanggal', $year)
@@ -68,6 +72,6 @@ class LandingPageController extends Controller
         $dataXPengeluaranPerKategori = $dataYPengeluaranPerKategori->pluck('kategori_pengeluaran')->pluck('nama_k_pengeluaran');
         $dataYPengeluaranPerKategori = $dataYPengeluaranPerKategori->pluck('jumlah');
         
-        return view('welcome', compact('year', 'listBulan', 'dataYPemasukan', 'dataYPengeluaran', 'pemasukanTotal', 'pengeluaranTotal', 'saldoTotal', 'dataXPemasukanPerDepartemen', 'dataYPemasukanPerDepartemen', 'dataXPengeluaranPerDepartemen', 'dataYPengeluaranPerDepartemen', 'dataXPemasukanPerKategori', 'dataYPemasukanPerKategori', 'dataXPengeluaranPerKategori', 'dataYPengeluaranPerKategori'));
+        return view('welcome', compact('year', 'listTahun', 'listBulan', 'dataYPemasukan', 'dataYPengeluaran', 'pemasukanTotal', 'pengeluaranTotal', 'saldoTotal', 'dataXPemasukanPerDepartemen', 'dataYPemasukanPerDepartemen', 'dataXPengeluaranPerDepartemen', 'dataYPengeluaranPerDepartemen', 'dataXPemasukanPerKategori', 'dataYPemasukanPerKategori', 'dataXPengeluaranPerKategori', 'dataYPengeluaranPerKategori'));
     }
 }
